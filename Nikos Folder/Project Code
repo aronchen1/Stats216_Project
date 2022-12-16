@@ -1,0 +1,34 @@
+PROC IMPORT 
+DATAFILE='/home/u62277311/sta216/lm1 intro sas/homeless_prep.csv'
+DBMS=csv REPLACE OUT=homelessness;
+GETNAMES=YES;
+RUN;
+
+
+PROC CONTENTS DATA=homelessness;
+RUN;
+
+PROC MEANS data=homelessness;
+var AGE;
+title "Select Numerical Summary Statistics";
+title2 "Age of Homeless Veterans";
+RUN;
+
+PROC SGPLOT DATA=homelessness;
+HISTOGRAM AGE / SHOWBINS;
+TITLE "Histogram of Age of Homeless Veterans";
+RUN;
+
+PROC SGPLOT DATA=homelessness;
+VBOX AGE;
+TITLE "Boxplot of Age of Homeless Veterans";
+RUN;
+
+PROC FREQ DATA=homelessness;
+TABLE AGE;
+TITLE "Frequencies of Age of Homeless Veterans";
+RUN;
+PROC MEANS DATA= homelessness N MEAN STD MIN MEDIAN MAX SKEWNESS KURTOSIS MAXDEC=1;
+VAR AGE;
+TITLE "Numerical summaries of Age of Homeless Veterans";
+RUN;
