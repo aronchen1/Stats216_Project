@@ -1,0 +1,39 @@
+/* Generated Code (IMPORT) */
+/* Source File: STA Final Data.xlsx */
+/* Source Path: /home/u62274831/STA Final */
+/* Code generated on: 12/15/22, 3:07 PM */
+
+%web_drop_table(WORK.IMPORT);
+
+
+FILENAME REFFILE '/home/u62274831/STA Final/STA Final Data.xlsx';
+PROC FORMAT;
+VALUE [$] substanceabuse 0 = "No"
+						 1 = "Yes"
+;
+RUN;
+PROC IMPORT DATAFILE=REFFILE
+	DBMS=XLSX
+	OUT=WORK.IMPORT;
+	GETNAMES=YES;
+RUN;
+
+PROC CONTENTS DATA=WORK.IMPORT; RUN;
+PROC PRINT DATA=WORK.IMPORT;
+TITLE 'Print One'; 
+TITLE2 'Print of All Variables'; 
+RUN;
+ods noproctitle;
+ods graphics / imagemap=on;
+PROC MEANS data=WORK.IMPORT N MIN MAX MEAN STD MEDIAN SKEWNESS KURTOSIS maxdec=3;
+var income;
+title "Select Numerical Summary Statistics";
+title2 "Income";
+RUN;
+PROC MEANS data=WORK.IMPORT N MIN MAX MEAN STD MEDIAN SKEWNESS KURTOSIS maxdec=3;
+var substanceabuse;
+title "Select Numerical Summary Statistics";
+title2 "Substance Abuse";
+RUN;
+
+%web_open_table(WORK.IMPORT);
